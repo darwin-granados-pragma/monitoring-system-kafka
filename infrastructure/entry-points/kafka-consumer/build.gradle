@@ -2,6 +2,8 @@ dependencies {
     implementation project(':model')
     implementation project(':usecase')
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'software.amazon.awssdk:kinesis:2.31.20'
+    implementation 'software.amazon.awssdk:auth:2.31.20'
     implementation 'io.projectreactor.kafka:reactor-kafka:1.3.25' // Deprecated
     implementation 'org.springframework.boot:spring-boot-starter-kafka'
     implementation 'org.apache.logging.log4j:log4j-api'

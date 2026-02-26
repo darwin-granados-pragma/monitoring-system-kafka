@@ -1,6 +1,8 @@
 package co.com.bancolombia.events.adapter;
 
 import co.com.bancolombia.events.config.KafkaProducerSettings;
+import co.com.bancolombia.events.constants.KafkaDefaults;
+import co.com.bancolombia.events.constants.KafkaPropertyKeys;
 import co.com.bancolombia.model.log.LogEvent;
 import co.com.bancolombia.model.log.PublishResult;
 import co.com.bancolombia.model.log.gateways.LogProducerGateway;
@@ -8,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.KafkaSender;
@@ -17,6 +20,9 @@ import reactor.kafka.sender.SenderResult;
 @Component
 @Log4j2
 @RequiredArgsConstructor
+@ConditionalOnProperty(prefix = KafkaPropertyKeys.ADAPTERS_MESSAGING_PREFIX,
+        name = KafkaPropertyKeys.PROVIDER_NAME,
+        havingValue = KafkaDefaults.PROVIDER)
 public class KafkaLogProducerAdapter implements LogProducerGateway {
     private static final String PUBLISHED_STATUS = "PUBLISHED";
 

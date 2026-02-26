@@ -1,6 +1,7 @@
 package co.com.bancolombia.events.constants;
 
 public final class KafkaDefaults {
+    public static final String PROVIDER = "kafka";
     public static final String BOOTSTRAP_SERVERS = "localhost:9092";
     public static final String MAIN_TOPIC = "monitoring.logs.main";
     public static final String DLT_TOPIC = "monitoring.logs.dlt";

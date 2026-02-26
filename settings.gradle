@@ -25,3 +25,5 @@ include ':async-event-bus'
 project(':async-event-bus').projectDir = file('./infrastructure/driven-adapters/async-event-bus')
 include ':kafka-consumer'
 project(':kafka-consumer').projectDir = file('./infrastructure/entry-points/kafka-consumer')
+include ':kinesis-event-bus'
+project(':kinesis-event-bus').projectDir = file('./infrastructure/driven-adapters/kinesis-event-bus')

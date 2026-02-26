@@ -23,15 +23,29 @@ management:
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
 adapters:
-  kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
-    topic:
-      main: ${KAFKA_TOPIC_MAIN:monitoring.logs.main}
-      dlt: ${KAFKA_TOPIC_DLT:monitoring.logs.dlt}
-    producer:
-      acks: ${KAFKA_PRODUCER_ACKS:all}
-      retries: ${KAFKA_PRODUCER_RETRIES:3}
+  messaging:
+    provider: ${MESSAGING_PROVIDER}
+  kinesis:
+    region: ${AWS_REGION}
+    endpoint-override: ${AWS_KINESIS_ENDPOINT_OVERRIDE}
+    access-key-id: ${AWS_KINESIS_ACCESS_KEY_ID}
+    secret-access-key: ${AWS_KINESIS_SECRET_ACCESS_KEY}
+    stream:
+      main: ${AWS_KINESIS_STREAM_MAIN}
+      dlt: ${AWS_KINESIS_STREAM_DLT}
     consumer:
-      group-id: ${KAFKA_CONSUMER_GROUP_ID:monitoring-system-group}
-      auto-offset-reset: ${KAFKA_CONSUMER_OFFSET_RESET:earliest}
-      concurrency: ${KAFKA_LISTENER_CONCURRENCY:1}
+      shard-iterator-type: ${AWS_KINESIS_SHARD_ITERATOR_TYPE}
+      poll-interval-ms: ${AWS_KINESIS_POLL_INTERVAL_MS}
+      max-records: ${AWS_KINESIS_MAX_RECORDS}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    topic:
+      main: ${KAFKA_TOPIC_MAIN}
+      dlt: ${KAFKA_TOPIC_DLT}
+    producer:
+      acks: ${KAFKA_PRODUCER_ACKS}
+      retries: ${KAFKA_PRODUCER_RETRIES}
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID}
+      auto-offset-reset: ${KAFKA_CONSUMER_OFFSET_RESET}
+      concurrency: ${KAFKA_LISTENER_CONCURRENCY}

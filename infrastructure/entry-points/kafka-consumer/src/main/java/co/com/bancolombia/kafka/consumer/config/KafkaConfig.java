@@ -2,6 +2,7 @@ package co.com.bancolombia.kafka.consumer.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static co.com.bancolombia.kafka.consumer.constants.KafkaConsumerDefaults.PROVIDER;
+import static co.com.bancolombia.kafka.consumer.constants.KafkaConsumerPropertyKeys.ADAPTERS_MESSAGING_PREFIX;
+import static co.com.bancolombia.kafka.consumer.constants.KafkaConsumerPropertyKeys.PROVIDER_NAME;
+
 @Configuration
+@ConditionalOnProperty(prefix = ADAPTERS_MESSAGING_PREFIX, name = PROVIDER_NAME, havingValue = PROVIDER)
 @EnableConfigurationProperties(KafkaConsumerSettings.class)
 public class KafkaConfig {
 

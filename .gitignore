@@ -337,3 +337,4 @@ build-cache
 
 .env
 .agent
+**/env/

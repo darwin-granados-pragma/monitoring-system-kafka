@@ -1,6 +1,7 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
+	implementation project(':kinesis-event-bus')
 	implementation project(':kafka-consumer')
 	implementation project(':async-event-bus')
 	implementation project(':reactive-web')

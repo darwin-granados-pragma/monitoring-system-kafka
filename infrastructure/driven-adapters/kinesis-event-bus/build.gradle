@@ -1,0 +1,10 @@
+dependencies {
+    implementation project(':model')
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework.boot:spring-boot'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    implementation 'org.apache.logging.log4j:log4j-api'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'software.amazon.awssdk:kinesis:2.31.20'
+    implementation 'software.amazon.awssdk:auth:2.31.20'
+}

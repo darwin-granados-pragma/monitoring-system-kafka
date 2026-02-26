@@ -2,6 +2,7 @@ package co.com.bancolombia.events.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,12 @@ import reactor.kafka.sender.SenderOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+import static co.com.bancolombia.events.constants.KafkaDefaults.PROVIDER;
+import static co.com.bancolombia.events.constants.KafkaPropertyKeys.ADAPTERS_MESSAGING_PREFIX;
+import static co.com.bancolombia.events.constants.KafkaPropertyKeys.PROVIDER_NAME;
+
 @Configuration
+@ConditionalOnProperty(prefix = ADAPTERS_MESSAGING_PREFIX, name = PROVIDER_NAME, havingValue = PROVIDER)
 @EnableConfigurationProperties(KafkaProducerSettings.class)
 public class KafkaProducerConfig {
 

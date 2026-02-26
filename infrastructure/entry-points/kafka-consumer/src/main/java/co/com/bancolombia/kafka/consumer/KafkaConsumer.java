@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import reactor.kafka.receiver.KafkaReceiver;
 @Component
 @Log4j2
 @RequiredArgsConstructor
+@ConditionalOnProperty(prefix = "adapters.messaging", name = "provider", havingValue = "kafka")
 public class KafkaConsumer {
     private static final String UNKNOWN_REASON = "DESERIALIZATION_OR_VALIDATION_ERROR";
 
@@ -33,14 +35,14 @@ public class KafkaConsumer {
                 .subscribe();
     }
 
-    private Mono<Void> processRecord(ConsumerRecord<String, String> record) {
-        String payload = record.value();
+    private Mono<Void> processRecord(ConsumerRecord<String, String> consumerRecord) {
+        String payload = consumerRecord.value();
         return Mono.fromCallable(() -> objectMapper.readValue(payload, LogEvent.class))
-                .flatMap(logEvent -> processLogUseCase.processValid(logEvent, record.topic()))
+                .flatMap(logEvent -> processLogUseCase.processValid(logEvent, consumerRecord.topic()))
                 .onErrorResume(error -> processLogUseCase.routeMalformed(
                         payload,
                         UNKNOWN_REASON,
-                        record.topic(),
+                        consumerRecord.topic(),
                         extractTraceId(payload)
                 ));
     }
